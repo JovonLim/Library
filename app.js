@@ -26,45 +26,101 @@ class Book {
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.index = -1;
   }
 }
 
 function addBookToLibrary() {
   let book = new Book(title.value, author.value, pages.value, read.checked);
-  myLibrary.push(book);
+  let len = myLibrary.push(book);
+  book.index = len - 1;
   addToDisplay(book);
-  updateNum();
 }
 
 function resetForm() {
   title.value = '';
   author.value = '';
   pages.value = '';
+  read.checked = false;
   form.style.display = "none";
 }
 
 function addToDisplay(book) {
   const createdBook = document.createElement("div");
   createdBook.classList.toggle("book");
-  const title = document.createElement("p");
-  const author = document.createElement("p");
-  const pages = document.createElement("p");
+  
+  const title = document.createElement("div");
+  const author = document.createElement("div");
+  const pages = document.createElement("div");
   const readLabel = document.createElement("label");
+  const readStatus = document.createElement("div");
   const read = document.createElement("input");
   read.setAttribute("type", "checkbox");
+  const removeBtn = document.createElement("button");
+  
  
   title.textContent = book.title;
   author.textContent = "by " + book.author;
   let str = book.pages == 1 ? " pg" : " pgs"
   pages.textContent = "Length: " + book.pages + str;
   readLabel.textContent = "Cleared:";
-  read.checked = book.read;
 
-  createdBook.append(title, author, pages, readLabel, read);
+  read.checked = book.read;
+  read.classList.toggle("read");
+  read.addEventListener("click", () => { 
+    toggleDisplayColor(book.index);
+    saveData()
+  });
+
+  removeBtn.innerHTML = "Remove";
+  removeBtn.setAttribute("id", book.index);
+  removeBtn.classList.toggle("removeBtn");
+  removeBtn.addEventListener("click", () => {
+    removeBook(removeBtn.getAttribute("id"));
+    saveData();
+  });
+  
+  readStatus.append(readLabel, read);
+  createdBook.append(title, author, pages, readStatus, removeBtn);
   bookDisplay.appendChild(createdBook);
+
+  toggleDisplayColor(book.index);
+  updateNum();
 }
 
 function updateNum() {
   let str = myLibrary.length == 1 ? ' book' : ' books';
   numDisplay.textContent = 'Currently has ' + myLibrary.length + str;
+}
+
+function removeBook(index) {
+  const selectedBook = document.getElementById(index).parentElement;
+  bookDisplay.removeChild(selectedBook);
+  myLibrary.splice(index, 1);
+  const remainingBtns = document.querySelectorAll(".removeBtn");
+  for (let i = 0; i < remainingBtns.length; i++) {
+    remainingBtns[i].setAttribute("id", i);
+  }
+  updateNum();
+}
+
+function toggleDisplayColor(index) {
+  const selectedBook = document.getElementById(index).parentElement;
+  const read = selectedBook.getElementsByClassName("read")[0];
+  selectedBook.style.backgroundColor = read.checked ? "bisque" : "coral";
+}
+
+function saveData() {
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function retriveData() {
+  if (localStorage.myLibrary) {
+    let savedArr = localStorage.getItem("myLibrary");
+    savedArr = JSON.parse(savedArr);
+    myLibrary = savedArr;
+    for (let i = 0; i < myLibrary.length; i++) {
+      addBookToLibrary(myLibrary[i]);
+    }
+  }
 }
