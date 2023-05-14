@@ -19,6 +19,7 @@ form.addEventListener("submit", (e) => {
 });
 
 let myLibrary = [];
+retriveData();
 
 class Book {
   constructor(title, author, pages, read) {
