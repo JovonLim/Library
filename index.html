@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <script src="app.js" defer></script>
+  <h1>Your Friendly Neighbourhood Library</h1>
+  <div class="book-container"></div>
+  <div class="form-popup" id="form">
+    <h3>New Book</h3>
+
+    <form class="form-container">
+      <input type="text" id="title" minlength="5" maxlength="50" pattern="[A-Za-z]+" title="Only insert letters" placeholder="Enter Title" name="title" required>
+
+      <input type="text" id="author" minlength="5" maxlength="50" pattern="[A-Za-z]+" title="Only insert letters" placeholder="Enter Author" name="author" required>
+
+      <input type="number" id="pages" min="1" max="2000" placeholder="Enter Number of Pages" name="pages" required>
+
+      <div class="status">      
+        <label>Have you cleared this?</label>
+        <input type="checkbox" id="read" name="read">
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" id="confirmBtn">Confirm</button>
+        <button type="button" id="closeBtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="display">
+    <div class="numBooks">Currently has 0 books</div>
+    <button id="addBtn">Add Book</button>
+  </div>
+</body>
+</html>

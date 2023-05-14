@@ -1,0 +1,90 @@
+body {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  background-color:aliceblue;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h3 {
+  color: #1F2937;
+  font-size: 22px;
+}
+
+.book-container {
+  display: grid;
+  grid-template-rows: repeat(4, 200px);
+  grid-template-columns: repeat(6, 250px);
+  grid-auto-rows: 200px;
+  grid-auto-columns: 250px;
+  row-gap: 40px;
+  column-gap: 40px;
+  text-align: center;
+  justify-content: center;
+}
+
+.book {
+  font-size: 20px;
+  color: #1F2937;
+  border: 5px solid black;
+  background-color: white;
+  overflow: auto;
+}
+
+#form {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  width: 18vh;
+  height: 25vh;
+  border: 5px solid black;
+  background-color: beige;
+}
+
+.form-container {
+  display: grid;
+  grid-template-rows: repeat(5, 40px);
+  grid-template-columns: repeat(1, 200px);
+  row-gap: 15px;
+  text-align: center;
+  justify-content: center;
+}
+
+button {
+  border-radius: 8px;
+  font-family: cursive;
+  background-color: #1F2937;
+  color: white;
+}
+
+.display {
+  width: 100%;
+  height: 150px;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.numBooks {
+  display: inline;
+  width: 60vw;
+  font-size: 30px;
+  margin-left: 3vw;
+  text-align: left;
+}
+
+#addBtn {
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  margin-right: 5vw;
+}
+
