@@ -19,7 +19,7 @@ form.addEventListener("submit", (e) => {
 });
 
 let myLibrary = [];
-retriveData();
+retrieveData();
 
 class Book {
   constructor(title, author, pages, read) {
@@ -68,9 +68,10 @@ function addToDisplay(book) {
 
   read.checked = book.read;
   read.classList.toggle("read");
-  read.addEventListener("click", () => { 
+  read.addEventListener("click", () => {
+    myLibrary[removeBtn.getAttribute("id")].read = read.checked;
     toggleDisplayColor(book.index);
-    saveData()
+    saveData();
   });
 
   removeBtn.innerHTML = "Remove";
@@ -85,6 +86,7 @@ function addToDisplay(book) {
   createdBook.append(title, author, pages, readStatus, removeBtn);
   bookDisplay.appendChild(createdBook);
 
+  saveData();
   toggleDisplayColor(book.index);
   updateNum();
 }
@@ -100,6 +102,7 @@ function removeBook(index) {
   myLibrary.splice(index, 1);
   const remainingBtns = document.querySelectorAll(".removeBtn");
   for (let i = 0; i < remainingBtns.length; i++) {
+    myLibrary[i].index = i;
     remainingBtns[i].setAttribute("id", i);
   }
   updateNum();
@@ -115,13 +118,13 @@ function saveData() {
   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 }
 
-function retriveData() {
+function retrieveData() {
   if (localStorage.myLibrary) {
     let savedArr = localStorage.getItem("myLibrary");
     savedArr = JSON.parse(savedArr);
     myLibrary = savedArr;
     for (let i = 0; i < myLibrary.length; i++) {
-      addBookToLibrary(myLibrary[i]);
+      addToDisplay(myLibrary[i]);
     }
   }
 }
